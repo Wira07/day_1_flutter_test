@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../auth/Login.dart';
 import 'CoffeeDetailScreen.dart';
 import 'app_main_screen.dart';
 
@@ -11,22 +11,25 @@ class CoffeeProfileScreen extends StatefulWidget {
 class _CoffeeProfileScreenState extends State<CoffeeProfileScreen> {
   int _selectedIndex = 2; // Default ke halaman Profile
 
-  // Daftar halaman yang tersedia
-  final List<Widget> _pages = [
-    HomeScreen(),
-    CartScreen(),
-    CoffeeProfileScreen(), // Halaman Profile
-  ];
-
   // Fungsi untuk navigasi antar halaman
   void _onTabSelected(int index) {
     if (index != _selectedIndex) {
       setState(() {
         _selectedIndex = index;
       });
+
+      Widget nextScreen;
+      if (index == 0) {
+        nextScreen = CoffeeAppMainScreen();
+      } else if (index == 1) {
+        nextScreen = CoffeeDetailScreen();
+      } else {
+        return; // Jika di profile, tidak pindah
+      }
+
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => _pages[index]),
+        MaterialPageRoute(builder: (context) => nextScreen),
       );
     }
   }
@@ -47,7 +50,6 @@ class _CoffeeProfileScreenState extends State<CoffeeProfileScreen> {
           ),
         ),
         centerTitle: true,
-        // Back button tetap ada di kode, namun dihilangkan dari UI
         leading: null,
       ),
       body: Padding(
@@ -55,7 +57,6 @@ class _CoffeeProfileScreenState extends State<CoffeeProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Foto Profil dan Nama
             const SizedBox(height: 20),
             CircleAvatar(
               radius: 60,
@@ -78,8 +79,6 @@ class _CoffeeProfileScreenState extends State<CoffeeProfileScreen> {
               ),
             ),
             const SizedBox(height: 20),
-
-            // Statistik (tanpa shadow, full width)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -89,7 +88,6 @@ class _CoffeeProfileScreenState extends State<CoffeeProfileScreen> {
               ],
             ),
             const SizedBox(height: 20),
-            // Daftar Pengaturan
             Expanded(
               child: ListView(
                 children: [
@@ -101,41 +99,27 @@ class _CoffeeProfileScreenState extends State<CoffeeProfileScreen> {
                   const Divider(),
                   _buildListTile("Dark", Icons.dark_mode, Colors.red),
                   const Divider(),
-                  _buildListTile("Exit", Icons.exit_to_app, Colors.red),
+                  _buildListTile(
+                    "Exit",
+                    Icons.exit_to_app,
+                    Colors.red,
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                  ),
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-
-          if (index == 0) {
-            // Kembali ke HomeScreen (Pastikan nama class benar)
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => CoffeeAppMainScreen()),
-            );
-          } else if (index == 1) {
-            // Pindah ke CoffeeDetailScreen
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CoffeeDetailScreen()),
-            );
-          } else if (index == 2) {
-            // Pindah ke Profile Screen
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CoffeeProfileScreen()),
-            );
-          }
-        },
+        onTap: _onTabSelected,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home, color: Colors.brown),
@@ -182,7 +166,7 @@ class _CoffeeProfileScreenState extends State<CoffeeProfileScreen> {
     );
   }
 
-  Widget _buildListTile(String title, IconData icon, Color iconColor) {
+  Widget _buildListTile(String title, IconData icon, Color iconColor, {VoidCallback? onTap}) {
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: iconColor.withOpacity(0.2),
@@ -196,9 +180,7 @@ class _CoffeeProfileScreenState extends State<CoffeeProfileScreen> {
         ),
       ),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-      onTap: () {
-        // Handle navigation atau aksi lainnya
-      },
+      onTap: onTap,
     );
   }
 }
@@ -243,7 +225,7 @@ class CartScreen extends StatelessWidget {
 
 void main() {
   runApp(MaterialApp(
-    debugShowCheckedModeBanner: false, // Hilangkan debug label
+    debugShowCheckedModeBanner: false,
     home: CoffeeProfileScreen(),
   ));
 }
