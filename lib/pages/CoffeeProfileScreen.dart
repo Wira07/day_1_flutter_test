@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'CoffeeDetailScreen.dart';
+import 'app_main_screen.dart';
+
 class CoffeeProfileScreen extends StatefulWidget {
   @override
   _CoffeeProfileScreenState createState() => _CoffeeProfileScreenState();
@@ -107,22 +110,43 @@ class _CoffeeProfileScreenState extends State<CoffeeProfileScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
-        selectedItemColor: Colors.brown,
-        unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
         currentIndex: _selectedIndex,
-        onTap: _onTabSelected,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+
+          if (index == 0) {
+            // Kembali ke HomeScreen (Pastikan nama class benar)
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => CoffeeAppMainScreen()),
+            );
+          } else if (index == 1) {
+            // Pindah ke CoffeeDetailScreen
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CoffeeDetailScreen()),
+            );
+          } else if (index == 2) {
+            // Pindah ke Profile Screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CoffeeProfileScreen()),
+            );
+          }
+        },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home, color: Colors.brown),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.shopping_cart, color: Colors.brown),
             label: 'Cart',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person, color: Colors.brown),
             label: 'Profile',
           ),
         ],

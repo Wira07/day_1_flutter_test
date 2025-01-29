@@ -1,6 +1,7 @@
 import 'dart:async'; // Import untuk Timer
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'CoffeeDetailScreen.dart';
 import 'CoffeeProfileScreen.dart';
 
 class CoffeeAppMainScreen extends StatefulWidget {
@@ -270,14 +271,25 @@ class _CoffeeAppMainScreenState extends State<CoffeeAppMainScreen> {
             _selectedIndex = index;
           });
 
-          if (index == 2) {
+          if (index == 0) {
+            // Kembali ke HomeScreen (Pastikan nama class benar)
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => CoffeeAppMainScreen()),
+            );
+          } else if (index == 1) {
+            // Pindah ke CoffeeDetailScreen
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CoffeeDetailScreen()),
+            );
+          } else if (index == 2) {
+            // Pindah ke Profile Screen
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => CoffeeProfileScreen()),
             );
           }
-
-
         },
         items: const [
           BottomNavigationBarItem(
