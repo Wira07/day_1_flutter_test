@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.1.0
+  flutter_animate: ^4.2.0
   intl: ^0.18.0 # Pastikan versi ini sesuai dengan kompatibilitas proyek Anda
 
   # The following adds the Cupertino Icons font to your application.

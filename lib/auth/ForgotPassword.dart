@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
@@ -6,93 +7,130 @@ class ForgotPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Background Image
-          Positioned.fill(
-            child: Image.asset(
-              'assets/coffee-shop/bg.png', // Ganti dengan path gambar Anda
-              fit: BoxFit.cover,
+      body: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFF464545),
+          image: DecorationImage(
+            image: AssetImage("assets/coffee-shop/bg.png"),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.6),
+              BlendMode.darken,
             ),
           ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+        ),
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Illustration
                   Image.asset(
-                    'assets/coffee-shop/minara.png', // Ganti dengan path ilustrasi yang sesuai
-                    height: 150,
+                    'assets/coffee-shop/minara.png',
+                    height: 120,
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 15),
                   Text(
-                    'Forgot your password?',
-                    style: TextStyle(
-                      fontSize: 22,
+                    "Forgot Password",
+                    style: GoogleFonts.poppins(
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Enter your registered email below to receive password reset instruction',
+                    'Enter your registered email to receive\npassword reset instructions',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white70,
                     ),
                   ),
+                  SizedBox(height: 30),
+                  _buildEmailTextField(),
                   SizedBox(height: 20),
-                  // Email Input Field
-                  TextField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.grey[800],
-                      hintText: 'example@gmail.com',
-                      hintStyle: TextStyle(color: Colors.white70),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  _buildSendButton(context),
                   SizedBox(height: 20),
-                  // Send Button
-                  SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: Text(
-                        'Send',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      'Back to login',
-                      style: TextStyle(color: Colors.green),
-                    ),
-                  ),
+                  _buildBackToLoginButton(context),
                 ],
               ),
             ),
           ),
-        ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmailTextField() {
+    return TextField(
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.white.withOpacity(0.2),
+        hintText: "Enter your email",
+        hintStyle: TextStyle(color: Colors.white70),
+        prefixIcon: Icon(Icons.email_outlined, color: Colors.white70),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.white.withOpacity(0.5)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.white.withOpacity(0.5)),
+        ),
+      ),
+      style: TextStyle(color: Colors.white),
+      keyboardType: TextInputType.emailAddress,
+    );
+  }
+
+  Widget _buildSendButton(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () {
+          // Add send reset link functionality
+        },
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.symmetric(vertical: 15),
+          backgroundColor: Colors.white,
+          foregroundColor: Color(0xFF4CAF50),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+            side: BorderSide(color: Color(0xFF4CAF50), width: 2),
+          ),
+        ),
+        child: Text(
+          "Send Reset Link",
+          style: TextStyle(
+            color: Color(0xFF4CAF50),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBackToLoginButton(BuildContext context) {
+    return InkWell(
+      onTap: () => Navigator.pop(context),
+      child: Text.rich(
+        TextSpan(
+          text: "Remember your password? ",
+          style: TextStyle(color: Colors.white),
+          children: [
+            TextSpan(
+              text: "BACK TO LOGIN",
+              style: TextStyle(
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
