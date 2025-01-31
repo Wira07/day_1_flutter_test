@@ -30,48 +30,13 @@ class RegisterScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 40),
-              TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey[800],
-                  hintText: 'Full Name',
-                  hintStyle: TextStyle(color: Colors.white70),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                style: TextStyle(color: Colors.white),
-              ),
+              _buildTextField("Full Name"),
               SizedBox(height: 15),
-              TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey[800],
-                  hintText: 'Email',
-                  hintStyle: TextStyle(color: Colors.white70),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                style: TextStyle(color: Colors.white),
-              ),
+              _buildTextField("Email"),
               SizedBox(height: 15),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey[800],
-                  hintText: 'Password',
-                  hintStyle: TextStyle(color: Colors.white70),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                style: TextStyle(color: Colors.white),
-              ),
+              _buildTextField("Password", obscureText: true),
+              SizedBox(height: 15),
+              _buildTextField("Confirm Password", obscureText: true),
               SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
@@ -79,12 +44,14 @@ class RegisterScreen extends StatelessWidget {
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 15),
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.white,
+                    foregroundColor: Color(0xFF4CAF50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(color: Color(0xFF4CAF50), width: 2),
                     ),
                   ),
-                  child: Text("Sign up"),
+                  child: Text("Sign up", style: TextStyle(color: Color(0xFF4CAF50))),
                 ),
               ),
               SizedBox(height: 20),
@@ -103,6 +70,7 @@ class RegisterScreen extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.green,
                             fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
                           ),
                         ),
                       ),
@@ -114,6 +82,23 @@ class RegisterScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField(String hintText, {bool obscureText = false}) {
+    return TextField(
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.black.withOpacity(0.6), // Adjusted transparency
+        hintText: hintText,
+        hintStyle: TextStyle(color: Colors.white70),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.white.withOpacity(0.5)),
+        ),
+      ),
+      style: TextStyle(color: Colors.white),
     );
   }
 }

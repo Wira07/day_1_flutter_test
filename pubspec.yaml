@@ -70,6 +70,10 @@ flutter:
     - assets/coffee-shop/flat_white.jpg
     - assets/coffee-shop/me.jpg
     - assets/coffee-shop/minara.png
+    - assets/coffee-shop/latte.jpeg
+    - assets/coffee-shop/cappuccino.jpeg
+    - assets/coffee-shop/espresso.jpeg
+    - assets/coffee-shop/mocha.jpeg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
