@@ -96,7 +96,7 @@ class _CoffeeAppMainScreenState extends State<CoffeeAppMainScreen> {
                             style: TextStyle(color: Colors.grey, fontSize: 14),
                           ),
                           Text(
-                            'Minara House, Kuningan',
+                            'Coffe Shop, Kuningan',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
