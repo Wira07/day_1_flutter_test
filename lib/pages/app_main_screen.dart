@@ -204,8 +204,8 @@ class _CoffeeAppMainScreenState extends State<CoffeeAppMainScreen> {
         final coffeeData = [
           {'title': 'Caffe Mocha', 'subtitle': 'Deep Foam', 'price': 25000.0, 'imageUrl': 'assets/coffee-shop/caffe_mocha.png'},
           {'title': 'Flat White', 'subtitle': 'Espresso', 'price': 22000.0, 'imageUrl': 'assets/coffee-shop/flat_white.jpg'},
-          {'title': 'Latte', 'subtitle': 'Creamy Milk', 'price': 20000.0, 'imageUrl': 'assets/coffee-shop/flat_white.jpg'},
-          {'title': 'Americano', 'subtitle': 'Black Coffee', 'price': 28000.0, 'imageUrl': 'assets/coffee-shop/caffe_mocha.png'},
+          {'title': 'Latte', 'subtitle': 'Creamy Milk', 'price': 20000.0, 'imageUrl': 'assets/coffee-shop/latte.jpeg'},
+          {'title': 'Americano', 'subtitle': 'Black Coffee', 'price': 28000.0, 'imageUrl': 'assets/coffee-shop/espresso.jpeg'},
         ];
         final coffee = coffeeData[index % coffeeData.length];
         return CoffeeCard(
