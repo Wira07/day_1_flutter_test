@@ -30,8 +30,10 @@ class _CoffeeAppMainScreenState extends State<CoffeeAppMainScreen> {
 
   void _startImageSlider() {
     Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (_currentPage < _promoImages.length - 1) _currentPage++;
-      else _currentPage = 0;
+      if (_currentPage < _promoImages.length - 1)
+        _currentPage++;
+      else
+        _currentPage = 0;
       _pageController.animateToPage(
         _currentPage,
         duration: const Duration(milliseconds: 300),
@@ -47,7 +49,9 @@ class _CoffeeAppMainScreenState extends State<CoffeeAppMainScreen> {
   }
 
   String formatCurrency(double amount) {
-    return NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0).format(amount);
+    return NumberFormat.currency(
+            locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0)
+        .format(amount);
   }
 
   @override
@@ -98,8 +102,13 @@ class _CoffeeAppMainScreenState extends State<CoffeeAppMainScreen> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
-            Text('Location', style: TextStyle(color: Colors.grey, fontSize: 14)),
-            Text('Coffe Shop, Kuningan', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+            Text('Location',
+                style: TextStyle(color: Colors.grey, fontSize: 14)),
+            Text('Coffe Shop, Kuningan',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold)),
           ],
         ),
         const Icon(Icons.notifications, color: Colors.white),
@@ -139,35 +148,149 @@ class _CoffeeAppMainScreenState extends State<CoffeeAppMainScreen> {
       height: MediaQuery.of(context).size.height * 0.2,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Stack(
         children: [
-          Positioned(
-            top: 10,
-            left: 10,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Text('Promo', style: TextStyle(color: Colors.white, fontSize: 12)),
-            ),
-          ),
-          Positioned(
-            bottom: 10,
-            left: 10,
-            child: Text('Buy one get one FREE', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
-          ),
+          // Page View with smooth transitions
           PageView.builder(
             controller: _pageController,
             itemCount: _promoImages.length,
             itemBuilder: (context, index) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.asset(_promoImages[index], fit: BoxFit.cover, width: double.infinity),
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 1),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  image: DecorationImage(
+                    image: AssetImage(_promoImages[index]),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Colors.black.withOpacity(0.1),
+                        Colors.black.withOpacity(0.6),
+                      ],
+                    ),
+                  ),
+                ),
               );
             },
+          ),
+          // Promo tag with improved design
+          Positioned(
+            top: 12,
+            left: 12,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.red[600],
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.local_fire_department,
+                    color: Colors.white,
+                    size: 14,
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    'Promo',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Promo description with better layout
+          Positioned(
+            bottom: 12,
+            left: 12,
+            right: 12,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: const Text(
+                    'Limited Time Offer',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Buy One Get One FREE',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.5,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black54,
+                        blurRadius: 4,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Page indicator dots
+          Positioned(
+            bottom: 12,
+            right: 12,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(
+                _promoImages.length,
+                (index) => Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 2),
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _currentPage == index
+                        ? Colors.white
+                        : Colors.white.withOpacity(0.5),
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -202,10 +325,30 @@ class _CoffeeAppMainScreenState extends State<CoffeeAppMainScreen> {
       itemCount: 4,
       itemBuilder: (context, index) {
         final coffeeData = [
-          {'title': 'Caffe Mocha', 'subtitle': 'Deep Foam', 'price': 25000.0, 'imageUrl': 'assets/coffee-shop/caffe_mocha.png'},
-          {'title': 'Flat White', 'subtitle': 'Espresso', 'price': 22000.0, 'imageUrl': 'assets/coffee-shop/flat_white.jpg'},
-          {'title': 'Latte', 'subtitle': 'Creamy Milk', 'price': 20000.0, 'imageUrl': 'assets/coffee-shop/latte.jpeg'},
-          {'title': 'Americano', 'subtitle': 'Black Coffee', 'price': 28000.0, 'imageUrl': 'assets/coffee-shop/espresso.jpeg'},
+          {
+            'title': 'Caffe Mocha',
+            'subtitle': 'Deep Foam',
+            'price': 25000.0,
+            'imageUrl': 'assets/coffee-shop/caffe_mocha.png'
+          },
+          {
+            'title': 'Flat White',
+            'subtitle': 'Espresso',
+            'price': 22000.0,
+            'imageUrl': 'assets/coffee-shop/flat_white.jpg'
+          },
+          {
+            'title': 'Latte',
+            'subtitle': 'Creamy Milk',
+            'price': 20000.0,
+            'imageUrl': 'assets/coffee-shop/latte.jpeg'
+          },
+          {
+            'title': 'Americano',
+            'subtitle': 'Black Coffee',
+            'price': 28000.0,
+            'imageUrl': 'assets/coffee-shop/espresso.jpeg'
+          },
         ];
         final coffee = coffeeData[index % coffeeData.length];
         return CoffeeCard(
@@ -225,14 +368,24 @@ class _CoffeeAppMainScreenState extends State<CoffeeAppMainScreen> {
       currentIndex: _selectedIndex,
       onTap: (index) {
         setState(() => _selectedIndex = index);
-        if (index == 0) Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => CoffeeAppMainScreen()));
-        else if (index == 1) Navigator.push(context, MaterialPageRoute(builder: (_) => CoffeeDetailScreen()));
-        else if (index == 2) Navigator.push(context, MaterialPageRoute(builder: (_) => CoffeeProfileScreen()));
+        if (index == 0)
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (_) => CoffeeAppMainScreen()));
+        else if (index == 1)
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => CoffeeDetailScreen()));
+        else if (index == 2)
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => CoffeeProfileScreen()));
       },
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.brown), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart, color: Colors.brown), label: 'Cart'),
-        BottomNavigationBarItem(icon: Icon(Icons.person, color: Colors.brown), label: 'Profile'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Colors.brown), label: 'Home'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart, color: Colors.brown),
+            label: 'Cart'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person, color: Colors.brown), label: 'Profile'),
       ],
     );
   }
@@ -242,7 +395,8 @@ class CategoryButton extends StatelessWidget {
   final String title;
   final bool isSelected;
 
-  const CategoryButton({required this.title, this.isSelected = false, super.key});
+  const CategoryButton(
+      {required this.title, this.isSelected = false, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -299,8 +453,10 @@ class CoffeeCard extends StatelessWidget {
         children: [
           Expanded(
             child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-              child: Image.asset(imageUrl, fit: BoxFit.cover, width: double.infinity),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(16)),
+              child: Image.asset(imageUrl,
+                  fit: BoxFit.cover, width: double.infinity),
             ),
           ),
           Padding(
@@ -308,15 +464,22 @@ class CoffeeCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(title,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 4),
-                Text(subtitle, style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+                Text(subtitle,
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600])),
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(formatCurrency(price), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_border)),
+                    Text(formatCurrency(price),
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.favorite_border)),
                   ],
                 ),
               ],
